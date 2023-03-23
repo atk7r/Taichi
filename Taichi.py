@@ -1,6 +1,8 @@
 import argparse
-import attack
-import scan
+import model.attack
+import model.scan
+from model import scan
+
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Taichi by atk7r")
@@ -33,7 +35,7 @@ def main():
         if poc:
             scan.scan_one(rhost, poc)
         elif exp:
-            attack.attack_one(rhost, exp)
+            model.attack.attack_one(rhost, exp)
         else:
             print("Please input exp or poc to scan.")
 
@@ -42,7 +44,7 @@ def main():
             if poc:
                 scan.scan_all(file, poc, outfile)
             elif exp:
-                attack.attack_all(file, exp, outfile)
+                model.attack.attack_all(file, exp, outfile)
             else:
                 print("Please input exp or poc to scan.")
 
@@ -50,7 +52,7 @@ def main():
             if poc:
                 scan.scan_all_threads(file, poc, thread_num=thread, outfile=outfile)
             elif exp:
-                attack.attack_all_threads(file, exp, thread_num=thread, outfile=outfile)
+                model.attack.attack_all_threads(file, exp, thread_num=thread, outfile=outfile)
             else:
                 print("Please input exp or poc to scan.")
     else:
