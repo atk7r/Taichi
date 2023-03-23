@@ -1,12 +1,12 @@
 import threading
 import requests
 import urllib3
-import config
-import config.color
-from config import agent, color
+import configuration
+
+from configuration import agent
 
 
-def attack_one(rhost, exp=None, outfile=None):
+def attack_one(rhost, poc=None, outfile=None):
     httpline = "https://" + rhost
     headers = {"Referer": httpline,
                "User-Agent": agent.random_ua(),
@@ -18,61 +18,61 @@ def attack_one(rhost, exp=None, outfile=None):
         urllib3.disable_warnings()
 
         # 第一个初始url
-        httpline_req = httpline + config.url(exp)
-        payload = config.payload(exp)
+        httpline_req = httpline + configuration.config.url(poc)
+        payload = configuration.config.payload(poc)
 
         # 判断method
-        if config.method(exp) == "post":
+        if configuration.config.method(poc) == "post":
             # 攻击请求
             requests.post(url=httpline_req, data=payload, headers=headers, verify=False, timeout=5)
 
-            if config.method_v(exp) == "post":
-                httpline_v = httpline + config.verify(exp)
+            if configuration.config.method_v(poc) == "post":
+                httpline_v = httpline + configuration.config.verify(poc)
                 response = requests.post(url=httpline_v, data=payload, headers=headers, verify=False, timeout=5)
 
-            elif config.method_v(exp) == "get":
-                httpline_v = httpline + config.verify(exp)
+            elif configuration.config.method_v(poc) == "get":
+                httpline_v = httpline + configuration.config.verify(poc)
                 response = requests.get(url=httpline_v, headers=headers, verify=False, timeout=5)
 
-        elif config.method(exp) == "get":
+        elif configuration.config.method(poc) == "get":
             # 攻击请求
             requests.get(url=httpline_req, params=payload, headers=headers, verify=False, timeout=5)
 
             # 验证攻击是否成功
-            if config.method_v(exp) == "get":
-                httpline_v = httpline + config.verify(exp)
+            if configuration.config.method_v(poc) == "get":
+                httpline_v = httpline + configuration.config.verify(poc)
                 response = requests.get(url=httpline_v, params=payload, headers=headers, verify=False, timeout=5)
-            elif config.method_v(exp) == "post":
-                httpline_v = httpline + config.verify(exp)
+            elif configuration.config.method_v(poc) == "post":
+                httpline_v = httpline + configuration.config.verify(poc)
                 response = requests.post(url=httpline_v, data=payload, headers=headers, verify=False, timeout=5)
 
         if response.status_code == 200:
             resp_text = response.text
-            result = config.check(config.word(exp), resp_text)
+            result = configuration.config.check(configuration.config.word(poc), resp_text)
             if result:
-                print(color.success(httpline_req))
+                print(configuration.color.vuln(httpline_req))
                 if outfile is not None:
                     with open(outfile, "a") as f:
                         f.writelines(httpline + "\n")
             else:
-                print(color.failed(httpline_req))
+                print(configuration.color.not_vuln(httpline_req))
         else:
-            print(color.failed(httpline_req))
+            print(configuration.color.not_vuln(httpline_req))
     except:
-        print(color.error(httpline_req))
+        print(configuration.color.not_vuln(httpline_req))
 
 
-def attack_all(file, exp=None, outfile=None):
+def attack_all(file, poc=None, outfile=None):
     for line in file:
         rhost = line.strip()
-        attack_one(rhost, exp, outfile)
+        attack_one(rhost, poc, outfile)
 
 
-def attack_all_threads(file, exp=None, thread_num=None, outfile=None):
+def attack_all_threads(file, poc=None, thread_num=None, outfile=None):
     if thread_num is not None:
         threads = []
         for i in range(thread_num):
-            t = threading.Thread(target=attack_all, args=(file, exp, outfile))
+            t = threading.Thread(target=attack_all, args=(file, poc, outfile))
             threads.append(t)
         for t in threads:
             t.start()

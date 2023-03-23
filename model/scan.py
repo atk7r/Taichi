@@ -1,14 +1,11 @@
 import threading
 import requests
 import urllib3
-import config
-import config.color
-import config.agent
-from config import agent, color
+import configuration
+from configuration import agent, color
 
 
 def scan_one(rhost, poc=None, outfile=None):
-
     httpline = "https://" + rhost
     headers = {"Referer": httpline,
                "User-Agent": agent.random_ua(),
@@ -19,32 +16,32 @@ def scan_one(rhost, poc=None, outfile=None):
     try:
         urllib3.disable_warnings()
 
-        httpline_req = httpline + config.url(poc)
-        payload = config.payload(poc)
+        httpline_req = httpline + configuration.config.url(poc)
+        payload = configuration.config.payload(poc)
 
-        if config.method(poc) == "post":
+        if configuration.config.method(poc) == "post":
             requests.post(url=httpline_req, data=payload, headers=headers, verify=False, timeout=5)
             response = requests.post(url=httpline_req, data=payload, headers=headers, verify=False, timeout=5)
 
 
-        elif config.method(poc) == "get":
+        elif configuration.config.method(poc) == "get":
             requests.get(url=httpline, params=payload, headers=headers, verify=False, timeout=5)
             response = requests.post(url=httpline_req, params=payload, headers=headers, verify=False, timeout=5)
 
         if response.status_code == 200:
             resp_text = response.text
-            result = config.check(config.word(poc), resp_text)
+            result = configuration.config.check(configuration.config.word(poc), resp_text)
             if result:
-                print(color.vuln(httpline_req))
+                print(configuration.color.vuln(httpline_req))
                 if outfile is not None:
                     with open(outfile, "a") as f:
                         f.writelines(httpline_req + "\n")
             else:
-                print(color.not_vuln(httpline_req))
+                print(configuration.color.not_vuln(httpline_req))
         else:
-            print(color.not_vuln(httpline_req))
+            print(configuration.color.not_vuln(httpline_req))
     except:
-        print(color.error(httpline_req))
+        print(configuration.color.error(httpline_req))
 
 
 def scan_all(file, poc=None, outfile=None):
