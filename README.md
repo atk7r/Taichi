@@ -94,6 +94,10 @@ python3 Taichi.py -f target.txt -a /root/Taichi/pocs -o result.txt -t 5
 ### poc.yaml格式
 
 ```
+#poc名称
+- name:
+  - name: "demo"
+
 #种类：poc对应的是scan.py
 - type:
   - type: "poc"
@@ -105,7 +109,6 @@ python3 Taichi.py -f target.txt -a /root/Taichi/pocs -o result.txt -t 5
 #payload
 - payload:
   - var: '{"body":{"file":"/WEB-INF/KmssConfig/admin.properties"}}'
-  
 #response包里的关键字
 - word:
   - word:
@@ -115,6 +118,10 @@ python3 Taichi.py -f target.txt -a /root/Taichi/pocs -o result.txt -t 5
 - url:
   - url : "/sys/ui/extend/varkind/custom.jsp"
 ```
+
+#### name
+
+poc名称，用于扫描时显示
 
 #### type
 
@@ -155,6 +162,10 @@ response包的关键词，用于判断漏洞是否存在，目前只可以支持
 ### exp.yaml格式
 
 ```
+#poc名称
+- name:
+  - name: "demo"
+
 #种类：exp对应的是attack.py
 - type:
   - type: "exp"
@@ -176,7 +187,7 @@ response包的关键词，用于判断漏洞是否存在，目前只可以支持
 - url:
   - url : "/sys/ui/extend/varkind/custom.jsp"
 
-#attack中 验证攻击成功的 请求方式
+#attack中 验证 是否攻击成功的 请求方式
 - method-V:
   - method: "get"
 
