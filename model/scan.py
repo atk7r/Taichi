@@ -23,7 +23,6 @@ def scan_one(rhost, poc=None, outfile=None):
                 if configuration.config.method(poc) == "post":
                     session.post(url=httpline_req, headers=headers, verify=False, timeout=5)
                     response = session.post(url=httpline_req, headers=headers, verify=False, timeout=5)
-                    print(response.text)
 
 
                 elif configuration.config.method(poc) == "get":

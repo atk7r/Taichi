@@ -7,7 +7,7 @@ from configuration import agent
 
 
 def attack_one(rhost, poc=None, outfile=None):
-    httpline = "https://" + rhost
+    httpline = "http://" + rhost
     headers = {"Referer": httpline,
                "User-Agent": agent.random_ua(),
                "Content-Type": "application/x-www-form-urlencoded",
