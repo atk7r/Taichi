@@ -4,6 +4,7 @@ import urllib3
 import configuration
 
 from configuration import agent
+from configuration.color import pocname
 
 
 def attack_one(rhost, poc=None, outfile=None):
@@ -50,16 +51,16 @@ def attack_one(rhost, poc=None, outfile=None):
             resp_text = response.text
             result = configuration.config.check(configuration.config.word(poc), resp_text)
             if result:
-                print(configuration.color.vuln(httpline_req))
+                print(pocname(poc)+configuration.color.vuln(httpline_req))
                 if outfile is not None:
                     with open(outfile, "a") as f:
                         f.writelines(httpline + "\n")
             else:
-                print(configuration.color.not_vuln(httpline_req))
+                print(pocname(poc)+configuration.color.not_vuln(httpline_req))
         else:
-            print(configuration.color.not_vuln(httpline_req))
+            print(pocname(poc)+configuration.color.not_vuln(httpline_req))
     except:
-        print(configuration.color.not_vuln(httpline_req))
+        print(pocname(poc)+configuration.color.not_vuln(httpline_req))
 
 
 def attack_all(file, poc=None, outfile=None):

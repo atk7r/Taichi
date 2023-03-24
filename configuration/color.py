@@ -1,3 +1,5 @@
+from configuration.config import name
+
 yellow = "\033[33m"
 green = "\033[32m"
 red = "\033[31m"
@@ -25,5 +27,10 @@ def success(self):
 
 
 def failed(self):
-    failed_color = "\033[32m[+]\033[0m" + "\033[33m{}\033[0m".format(self) + "\033[32m attack failed. \033[0m"
+    failed_color = "\033[32m[-]\033[0m" + "\033[33m{}\033[0m".format(self) + "\033[32m attack failed. \033[0m"
     return failed_color
+
+
+def pocname(self):
+    name_color = "\033[34m[\033[0m" + "\033[34m{}\033[0m".format(name(self)) + "\033[34m]\033[0m"
+    return name_color

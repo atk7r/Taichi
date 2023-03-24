@@ -1,3 +1,7 @@
+#poc名称
+- name:
+  - name: "thinkphp_rce"
+
 #种类：exp对应的是attack.py
 - type:
   - type: "exp"

@@ -17,16 +17,20 @@ def get_value(self, index):
     return list(value.values())[0]
 
 
-def type(self):
+def name(self):
     return get_value(self, 0)
 
 
-def method(self):
+def type(self):
     return get_value(self, 1)
 
 
+def method(self):
+    return get_value(self, 2)
+
+
 def payload(self):
-    data = load_yaml(self)[2]
+    data = load_yaml(self)[3]
     value = list(data.values())[0]
     dict_payload = {}
     for i in value:
@@ -35,34 +39,35 @@ def payload(self):
 
 
 def word(self):
-    return get_value(self, 3)[0]
+    return get_value(self, 4)[0]
 
 
 def url(self):
-    return get_value(self, 4)
-
-
-def method_v(self):
     return get_value(self, 5)
 
 
-def verify(self):
+def method_v(self):
     return get_value(self, 6)
 
 
-filename = "C:\\Users\\CCJ\\Desktop\\Taichi-main\\pocs\\minio.yaml"
+def verify(self):
+    return get_value(self, 7)
+
+# filename = "C:\\Users\\CCJ\\Desktop\\Taichi-main\\pocs\\CNVD-2022-42853.yaml"
+# n = name(filename)
 # x = type(filename)
 # a = method(filename)
-b = payload(filename)
+# b = payload(filename)
 # c = word(filename)
 # d = url(filename)
 # e = method_v(filename)
 # f = verify(filename)
-#
+
 # print(x)
 # print(a)
-print(b)
+# print(b)
 # print(c)
 # print(d)
 # print(e)
 # print(f)
+# print(n)

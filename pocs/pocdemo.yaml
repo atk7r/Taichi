@@ -1,3 +1,7 @@
+#poc名称
+- name:
+  - name: "demo"
+
 #种类：poc对应的是scan.py
 - type:
   - type: "poc"
