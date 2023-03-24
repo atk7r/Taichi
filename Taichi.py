@@ -48,7 +48,7 @@ def main():
 
         else:
             if configuration.config.type(poc) == "poc":
-                model.attack.attack_one(rhost, poc)
+                model.scan.scan_one(rhost, poc)
             else:
                 if configuration.config.type(poc) == "exp":
                     model.attack.attack_one(rhost, poc)
@@ -100,5 +100,4 @@ def main():
 
 
 if __name__ == "__main__":
-    parse_args()
     main()

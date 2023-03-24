@@ -50,17 +50,18 @@ def verify(self):
     return get_value(self, 6)
 
 
-# x = type("exp.yaml")
-# a = method("exp.yaml")
-# b = payload("exp.yaml")
-# c = word("exp.yaml")
-# d = url("exp.yaml")
-# e = method_v("exp.yaml")
-# f = verify("exp.yaml")
+filename = "C:\\Users\\CCJ\\Desktop\\Taichi-main\\pocs\\minio.yaml"
+# x = type(filename)
+# a = method(filename)
+b = payload(filename)
+# c = word(filename)
+# d = url(filename)
+# e = method_v(filename)
+# f = verify(filename)
 #
 # print(x)
 # print(a)
-# print(b)
+print(b)
 # print(c)
 # print(d)
 # print(e)

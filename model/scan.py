@@ -6,7 +6,7 @@ from configuration import agent, color
 
 
 def scan_one(rhost, poc=None, outfile=None):
-    httpline = "https://" + rhost
+    httpline = "http://" + rhost
     headers = {"Referer": httpline,
                "User-Agent": agent.random_ua(),
                "Content-Type": "application/x-www-form-urlencoded",
@@ -15,18 +15,31 @@ def scan_one(rhost, poc=None, outfile=None):
 
     try:
         urllib3.disable_warnings()
+        with requests.Session() as session:
+            httpline_req = httpline + configuration.config.url(poc)
 
-        httpline_req = httpline + configuration.config.url(poc)
-        payload = configuration.config.payload(poc)
+            if configuration.config.payload(poc) == {'isNone': 'isNone'}:
 
-        if configuration.config.method(poc) == "post":
-            requests.post(url=httpline_req, data=payload, headers=headers, verify=False, timeout=5)
-            response = requests.post(url=httpline_req, data=payload, headers=headers, verify=False, timeout=5)
+                if configuration.config.method(poc) == "post":
+                    session.post(url=httpline_req, headers=headers, verify=False, timeout=5)
+                    response = session.post(url=httpline_req, headers=headers, verify=False, timeout=5)
+                    print(response.text)
 
 
-        elif configuration.config.method(poc) == "get":
-            requests.get(url=httpline, params=payload, headers=headers, verify=False, timeout=5)
-            response = requests.post(url=httpline_req, params=payload, headers=headers, verify=False, timeout=5)
+                elif configuration.config.method(poc) == "get":
+                    session.get(url=httpline, headers=headers, verify=False, timeout=5)
+                    response = session.post(url=httpline_req, headers=headers, verify=False, timeout=5)
+            else:
+                payload = configuration.config.payload(poc)
+
+                if configuration.config.method(poc) == "post":
+                    session.post(url=httpline_req, data=payload, headers=headers, verify=False, timeout=5)
+                    response = session.post(url=httpline_req, data=payload, headers=headers, verify=False, timeout=5)
+
+
+                elif configuration.config.method(poc) == "get":
+                    session.get(url=httpline, data=payload, headers=headers, verify=False, timeout=5)
+                    response = session.post(url=httpline_req, data=payload, headers=headers, verify=False, timeout=5)
 
         if response.status_code == 200:
             resp_text = response.text

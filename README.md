@@ -10,6 +10,8 @@
 
 新增扫描多个poc功能
 
+适配[CVE-2023-28432](https://mp.weixin.qq.com/s/vpI3C575BxSPzHNi_oF60w)
+
 ## 前言
 
 之前写了几个poc，感觉代码有很多相似的地方，所以我寻思能不能写个大体框架，这样以后就不用改来改去了。当然，我也知道有nuclei这样成熟好用的工具，但是我还是想试试，所以就搞了一个这个。（大佬勿喷）
@@ -34,6 +36,7 @@
 #payload
 - payload:
   - var: '{"body":{"file":"/WEB-INF/KmssConfig/admin.properties"}}'
+  
 #response包里的关键字
 - word:
   - word:
@@ -54,6 +57,12 @@
 
 ```
   - a: 'aaaaaaaaaaa'
+```
+
+如果像[(CVE-2023-28432)](https://mp.weixin.qq.com/s/vpI3C575BxSPzHNi_oF60w)这样的漏洞，没有payload，写成：
+
+```
+  - isNone : 'isNone'
 ```
 
 ## exp.yaml格式
