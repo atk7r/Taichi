@@ -1,23 +1,23 @@
 #poc名称
 - name:
-  - name: "CVE-2023-28432"
+  - name: "SeeyouOA_A6_initDataAssess_Disclosure_of_sensitive_user_information"
 
 #请求方式
 - method:
-  - method: "post"
+  - method: "get"
 
 #payload
 - payload:
-  - payload : 'isNone'
+  - payload: "isNone"
 
 #response包里的关键字
 - word:
   - word:
-      - "OS"
+      - "personList"
 
 #漏洞的位置
 - url:
-  - url : "/minio/bootstrap/v1/verify"
+  - url : "/yyoa/assess/js/initDataAssess.jsp"
 
 #验证是否攻击成功的 请求方式
 - method-V:

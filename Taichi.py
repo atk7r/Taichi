@@ -1,7 +1,5 @@
 import argparse
-
 import configuration.config
-import model.attack
 import model.scan
 from model.load_all import load_all_files
 import model.load_all
@@ -38,63 +36,33 @@ def main():
     if rhost:
         if all:
             for i in load_all_files(all):
-                if configuration.config.type(i) == "poc":
-                    model.scan.scan_one(rhost, poc=i)
-                else:
-                    if configuration.config.type(i) == "exp":
-                        model.attack.attack_one(rhost, poc=i)
-                    else:
-                        print("Please input poc path to scan.")
-
+                model.scan.scan_one(rhost, poc=i)
         else:
-            if configuration.config.type(poc) == "poc":
+            if all is None:
                 model.scan.scan_one(rhost, poc)
             else:
-                if configuration.config.type(poc) == "exp":
-                    model.attack.attack_one(rhost, poc)
-
-                else:
-                    print("Please input poc to scan.")
+                print("Please input poc to scan.")
 
     elif file:
         if thread is None:
             if all:
                 for i in load_all_files(all):
-                    if configuration.config.type(i) == "poc":
-                        model.scan.scan_all(file, poc=i, outfile=outfile)
-                    else:
-                        if configuration.config.type(i) == "exp":
-                            model.attack.attack_all(file, poc=i, outfile=outfile)
-                        else:
-                            print("Please input poc path to scan.")
-
+                    model.scan.scan_all(file, poc=i, outfile=outfile)
             else:
-                if configuration.config.type(poc) == "poc":
-                    model.scan.scan_all(file, poc, outfile)
+                if all is None:
+                    model.scan.scan_all(file, poc, outfile=outfile)
                 else:
-                    if configuration.config.type(poc) == "exp":
-                        model.attack.attack_all(file, poc, outfile)
-                    else:
-                        print("Please input poc to scan.")
+                    print("Please input poc path to scan.")
 
         else:
             if all:
                 for i in load_all_files(all):
-                    if configuration.config.type(i) == "poc":
-                        model.scan.scan_all_threads(file, poc=i, thread_num=thread, outfile=outfile)
-                    else:
-                        if configuration.config.type(i) == "exp":
-                            model.attack.attack_all_threads(file, poc=i, thread_num=thread, outfile=outfile)
-                        else:
-                            print("Please input poc path to scan.")
+                    model.scan.scan_all_threads(file, poc=i, thread_num=thread, outfile=outfile)
             else:
-                if configuration.config.type(poc) == "poc":
+                if all is None:
                     model.scan.scan_all_threads(file, poc, thread_num=thread, outfile=outfile)
                 else:
-                    if configuration.config.type(poc) == "exp":
-                        model.attack.attack_all_threads(file, poc, thread_num=thread, outfile=outfile)
-                    else:
-                        print("Please input poc to scan.")
+                    print("Please input poc to scan.")
     else:
         print("Please input -h for help.")
 

