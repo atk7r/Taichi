@@ -17,7 +17,7 @@
 
 #漏洞的位置
 - url:
-  - url : "yyoa/ext/createMysql.jsp"
+  - url : "/yyoa/ext/createMysql.jsp"
 
 #验证是否攻击成功的 请求方式
 - method-V:
@@ -26,3 +26,7 @@
 #webshell位置
 - verify:
   - verify : "isNone"
+
+#cmd 为了适配Java反序列化漏洞
+- cmd:
+  - cmd : "isNone"

@@ -1,7 +1,6 @@
 import re
 import yaml
 
-
 def check(string, text):
     return bool(re.search(string, text))
 
@@ -41,8 +40,17 @@ def method_v(self):
 def verify(self):
     return get_value(self, 6)
 
+def command(self):
+    return get_value(self, 7)
 
-# filename = "C:\\Users\\CCJ\\Desktop\\Taichi-main\\pocs\\CNVD-2022-42853.yaml"
+def searchip(self):
+    return bool(re.search("<IP>", payload(self)))
+
+def searchdns(self):
+    return bool(re.search("<DNS>", payload(self)))
+
+
+# filename = "C:\\Users\\CCJ\\Desktop\\Taichi-main\\pocs\\seeyou\\SeeyouOA_Fastjson_Deserialization.yaml"
 # n = name(filename)
 # a = method(filename)
 # b = payload(filename)
@@ -50,7 +58,7 @@ def verify(self):
 # d = url(filename)
 # e = method_v(filename)
 # f = verify(filename)
-
+# g = command(filename)
 
 # print(n)
 # print(a)
@@ -58,5 +66,6 @@ def verify(self):
 # print(c)
 # print(d)
 # print(e)
-# print(f)
+# print(type(f))
+# print(g)
 

@@ -27,4 +27,7 @@
 - verify:
   - verify : "/shell.php?cmd=phpinfo();"
 
+#cmd 为了适配Java反序列化漏洞
+- cmd:
+  - cmd : "isNone"
 

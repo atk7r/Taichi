@@ -44,3 +44,7 @@ originalCreateDate=wLSGP4oEzLKAz4=iz=66
 #webshell位置
 - verify:
   - verify : "isNone"
+
+#cmd 为了适配Java反序列化漏洞
+- cmd:
+  - cmd : "isNone"

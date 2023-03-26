@@ -1,6 +1,5 @@
 import os
 
-
 def load_all_files(self):
     yaml_files = []
     for dir_name, dirs, files in os.walk(self):
@@ -10,11 +9,3 @@ def load_all_files(self):
     return yaml_files
     print(yaml_files)
 
-    # for i in yaml_files:
-    #     print(i)
-    #     return i
-
-#
-# for i in load_all_files("C:\\Users\\CCJ\\Desktop\\Taichi-main\\configuration"):
-#
-#     print(i)

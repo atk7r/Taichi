@@ -1,9 +1,9 @@
 import argparse
 import configuration.config
-import model.scan
+import model.scanbak
 from model.load_all import load_all_files
 import model.load_all
-
+import model.scan
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Taichi by atk7r")
