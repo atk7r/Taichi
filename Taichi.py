@@ -1,6 +1,6 @@
 import argparse
 import configuration.config
-import model.scanbak
+import model.scan
 from model.load_all import load_all_files
 import model.load_all
 import model.scan

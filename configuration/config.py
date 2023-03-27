@@ -22,26 +22,27 @@ def name(self):
 def method(self):
     return get_value(self, 1)
 
-
-def payload(self):
+def url(self):
     return get_value(self, 2)
 
+def payload(self):
+    return get_value(self, 3)
+
+def status(self):
+    return int(get_value(self, 4))
+
 def word(self):
-    return get_value(self, 3)[0]
-
-def url(self):
-    return get_value(self, 4)
-
+    return get_value(self, 5)[0]
 
 def method_v(self):
-    return get_value(self, 5)
-
-
-def verify(self):
     return get_value(self, 6)
 
-def command(self):
+def verify(self):
     return get_value(self, 7)
+
+def command(self):
+    return get_value(self, 8)
+
 
 def searchip(self):
     return bool(re.search("<IP>", payload(self)))
@@ -50,22 +51,27 @@ def searchdns(self):
     return bool(re.search("<DNS>", payload(self)))
 
 
-# filename = "C:\\Users\\CCJ\\Desktop\\Taichi-main\\pocs\\seeyou\\SeeyouOA_Fastjson_Deserialization.yaml"
+
+
+
+# filename = "C:\\Users\\CCJ\\Desktop\\Taichi-main\\pocs\\SeeyouOA\\SeeyouOA_Fastjson_Deserialization.yaml"
 # n = name(filename)
 # a = method(filename)
-# b = payload(filename)
-# c = word(filename)
-# d = url(filename)
-# e = method_v(filename)
-# f = verify(filename)
-# g = command(filename)
-
+# b = url(filename)
+# c = payload(filename)
+# d = status(filename)
+# e = word(filename)
+# f = method_v(filename)
+# g = verify(filename)
+# h = command(filename)
+#
 # print(n)
 # print(a)
 # print(b)
 # print(c)
 # print(d)
 # print(e)
-# print(type(f))
+# print(f)
 # print(g)
+# print(h)
 

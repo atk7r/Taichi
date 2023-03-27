@@ -22,7 +22,11 @@ def scan_one(rhost, poc=None, outfile=None):
         response = send_request(session, payload, method, httpline, command, poc, verify_method, verify_url)
 
         # 输出结果
+
         configuration.final_result.result(response, poc, httpline_req, outfile)
+
+
+
 
     # except:
     #     print(configuration.color.error(httpline_req) + pocname(poc))

