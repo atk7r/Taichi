@@ -8,7 +8,7 @@ from configuration.send import send_request
 
 
 def scan_one(rhost, poc=None, outfile=None):
-    httpline = "http://" + rhost
+    httpline = rhost
     # try:
     with requests.Session() as session:
         command = configuration.config.command(poc)
