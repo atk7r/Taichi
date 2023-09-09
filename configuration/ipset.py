@@ -13,6 +13,3 @@ def dnslog_payload(poc):
     old = payload(poc)
     new = old.replace("<DNS>", ip)
     return new
-
-# ldap_payload("C:\\Users\\CCJ\\Desktop\\Taichi-main\\pocs\\seeyou\\SeeyouOA_Fastjson_Deserialization.yaml")
-# dnslog_payload("C:\\Users\\CCJ\\Desktop\\Taichi-main\\pocs\\LandrayOA\\LandrayOA_treexml_rce.yaml")
