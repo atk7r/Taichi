@@ -51,27 +51,3 @@ def searchdns(self):
     return bool(re.search("<DNS>", payload(self)))
 
 
-
-
-
-# filename = "C:\\Users\\CCJ\\Desktop\\Taichi-main\\pocs\\SeeyouOA\\SeeyouOA_Fastjson_Deserialization.yaml"
-# n = name(filename)
-# a = method(filename)
-# b = url(filename)
-# c = payload(filename)
-# d = status(filename)
-# e = word(filename)
-# f = method_v(filename)
-# g = verify(filename)
-# h = command(filename)
-#
-# print(n)
-# print(a)
-# print(b)
-# print(c)
-# print(d)
-# print(e)
-# print(f)
-# print(g)
-# print(h)
-
