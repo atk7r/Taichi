@@ -12,7 +12,7 @@
 
 #payload
 - payload:
-  - payload: 'json={"url":"/general/../../nginx/logs/oa.access.log"}'
+  - payload: 'json={"urlpath":"/general/../../nginx/logs/oa.access.log"}'
 
 #response包里状态码
 - status:

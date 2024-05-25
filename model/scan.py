@@ -8,28 +8,26 @@ from configuration.send import send_request
 
 
 def scan_one(rhost, poc=None, outfile=None):
-    httpline = rhost
-    # try:
-    with requests.Session() as session:
-        command = configuration.config.command(poc)
-        method = configuration.config.method(poc)
-        httpline_req = httpline + configuration.config.url(poc)
-        payload = configuration.config.payload(poc)
-        verify_method = configuration.config.method_v(poc)
-        verify_url = configuration.config.verify(poc)
+    host = rhost
+    httpline = "http://" + host
+    command = configuration.config.command(poc)
+    method = configuration.config.method(poc)
+    urlpath = configuration.config.urlpath(poc)
+    payload = configuration.config.payload(poc)
+    verify_method = configuration.config.method_v(poc)
+    verify_urlpath = configuration.config.verify(poc)
+
+    try:
 
         # 发送请求
-        response = send_request(session, payload, method, httpline, command, poc, verify_method, verify_url)
+        resp = send_request(host, method, urlpath, payload, command, poc, verify_method, verify_urlpath)
 
         # 输出结果
 
-        configuration.final_result.result(response, poc, httpline_req, outfile)
+        configuration.final_result.result(resp, poc, httpline, urlpath, outfile)
 
-
-
-
-    # except:
-    #     print(configuration.color.error(httpline_req) + pocname(poc))
+    except:
+        print(configuration.color.error(httpline+urlpath) + pocname(poc))
 
 
 def scan_all(file, poc=None, outfile=None):

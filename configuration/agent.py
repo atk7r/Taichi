@@ -9953,7 +9953,7 @@ def random_ua():
         "webcollage/1.125",
         "webcollage/1.117",
         "webcollage/1.114",
-        "Websquash.com (Add url robot)",
+        "Websquash.com (Add urlpath robot)",
         "http://www.almaden.ibm.com/cs/crawler   [wf84]",
         "WoFindeIch Robot 1.0(+http://www.search.wofindeich.com/robot.php)",
         "WoFindeIch Robot 1.0( http://www.search.wofindeich.com/robot.php)",

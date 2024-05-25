@@ -1,6 +1,7 @@
 import re
 import yaml
 
+
 def check(string, text):
     return bool(re.search(string, text))
 
@@ -19,26 +20,34 @@ def get_value(self, index):
 def name(self):
     return get_value(self, 0)
 
+
 def method(self):
     return get_value(self, 1)
 
-def url(self):
+
+def urlpath(self):
     return get_value(self, 2)
+
 
 def payload(self):
     return get_value(self, 3)
 
+
 def status(self):
     return int(get_value(self, 4))
+
 
 def word(self):
     return get_value(self, 5)[0]
 
+
 def method_v(self):
     return get_value(self, 6)
 
+
 def verify(self):
     return get_value(self, 7)
+
 
 def command(self):
     return get_value(self, 8)
@@ -46,6 +55,7 @@ def command(self):
 
 def searchip(self):
     return bool(re.search("<IP>", payload(self)))
+
 
 def searchdns(self):
     return bool(re.search("<DNS>", payload(self)))
